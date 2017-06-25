@@ -24,6 +24,13 @@ TLSegmentedControl
 
 ```
 
+# Installation with CocoaPods
+For TLSegmentedControl, use the following entry in your Podfile:
+```
+* pod 'TLSegmentedControl'
+```
+Then run ```pod install```
+
 # Images
 
 <img src="./ScreenShot/1.gif" width="320">
