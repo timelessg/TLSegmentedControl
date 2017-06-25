@@ -120,7 +120,7 @@
 				TargetAttributes = {
 					4B86BD201EFB932B002BFA13 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 6ZLY37X4F2;
+						DevelopmentTeam = HLFH2Z48FU;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -275,11 +275,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6ZLY37X4F2;
+				DEVELOPMENT_TEAM = HLFH2Z48FU;
 				INFOPLIST_FILE = TLSegmentedControl/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.garry.TLSegmentedControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -287,11 +289,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6ZLY37X4F2;
+				DEVELOPMENT_TEAM = HLFH2Z48FU;
 				INFOPLIST_FILE = TLSegmentedControl/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.garry.TLSegmentedControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -19,8 +19,11 @@
 @property(nonatomic,assign)CGFloat offsetX;
 //current index
 @property(nonatomic,assign)NSUInteger index;
+//single page width, default is screen's width
+@property(nonatomic,assign)CGFloat pageWidth;
 //spacing > 0 && segment's totoal width > segmentedControl.width => scroll = true。default is zero，scroll enable = false
 @property(nonatomic,assign)CGFloat spacing;
+//only support top & bottom for a moment
 @property(nonatomic,assign)UIEdgeInsets padding;
 //gradient colors, if set single color indicatorBar will be pure color
 @property(nonatomic,strong)NSArray *indicatorBarColor;

@@ -20,7 +20,6 @@
 @property(nonatomic,strong)NSMutableArray *btns;
 @property(nonatomic,strong)UIView *indicatorBar;
 @property(nonatomic,strong)CAGradientLayer *gradientLayer;
-@property(nonatomic,assign)CGFloat pageWidth;
 @end
 
 @implementation TLSegmentedControl
@@ -28,7 +27,6 @@
     if (self = [super init]) {
         self.delegate = delegate;
         self.segmentedTitles = titles;
-        self.pageWidth = [UIScreen mainScreen].bounds.size.width;
         [self setupViews];
     }
     return self;
@@ -37,7 +35,6 @@
     if (self = [super initWithFrame:frame]) {
         self.delegate = delegate;
         self.segmentedTitles = titles;
-        self.pageWidth = [UIScreen mainScreen].bounds.size.width;
         [self setupViews];
     }
     return self;
@@ -71,6 +68,8 @@
 #pragma mark - private method
 
 -(void)setupViews {
+    self.pageWidth = [UIScreen mainScreen].bounds.size.width;
+    
     [self addSubview:self.scrollView];
     
     [self.scrollView addSubview:self.indicatorBar];
@@ -97,7 +96,11 @@
 }
 
 #pragma mark - setter
-
+-(void)setPageWidth:(CGFloat)pageWidth {
+    _pageWidth = pageWidth;
+    
+    [self setOffsetX:_offsetX];
+}
 -(void)setSegmentedTitles:(NSArray *)segmentedTitles {
     _segmentedTitles = segmentedTitles;
     
@@ -163,6 +166,9 @@
     [self layoutIfNeeded];
 }
 -(void)setOffsetX:(CGFloat)offsetX {
+    if (self.pageWidth == 0) {
+        return;
+    }
     NSInteger index = offsetX / self.pageWidth;
     CGFloat rOffset = fmodf(offsetX, self.pageWidth);
     CGFloat width = self.indicatorBarSize.width;
@@ -235,15 +241,15 @@
     self.scrollView.contentSize = CGSizeMake(btnsWidth + spacing * (self.btns.count - 1), 0);
     self.gradientLayer.frame = CGRectMake(0, 0, self.scrollView.contentSize.width, self.height);
     
-    UIButton *lastBtn = nil;
+    JLSegmentedButton *lastBtn = nil;
     for (int j = 0; j < self.btns.count; j ++ ) {
         JLSegmentedButton *segBtn = self.btns[j];
-        segBtn.center = CGPointMake(CGRectGetMidX(segBtn.frame) + (lastBtn ? CGRectGetMaxX(lastBtn.frame) + spacing : 0) + self.padding.left - self.padding.right, segBtn.height / 2 + self.padding.top);
+        segBtn.center = CGPointMake(CGRectGetMidX(segBtn.frame) + (lastBtn ? CGRectGetMaxX(lastBtn.frame) + spacing : 0), segBtn.height / 2 + self.padding.top);
         lastBtn = segBtn;
     }
     
-    UIButton *firstBtn = [self.btns firstObject];
-    self.indicatorBar.center = CGPointMake(CGRectGetMidX(firstBtn.frame), CGRectGetMidY(firstBtn.frame) + CGRectGetHeight(firstBtn.frame) / 2 + 5);
+    JLSegmentedButton *firstBtn = [self.btns firstObject];
+    self.indicatorBar.center = CGPointMake(CGRectGetMidX(firstBtn.frame), self.height - CGRectGetMidY(self.indicatorBar.frame) - self.padding.bottom);
 }
 @end
 
