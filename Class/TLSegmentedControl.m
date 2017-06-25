@@ -11,6 +11,147 @@
 
 #define UIColorFromHEX(hex) [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0]
 
+
+@interface UIView (TL)
+@property (nonatomic, assign) CGFloat x;
+@property (nonatomic, assign) CGFloat y;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat centerX;
+@property (nonatomic, assign) CGFloat centerY;
+@property (nonatomic, assign) CGSize  size;
+@property (nonatomic, assign) CGPoint origin;
+@property (nonatomic, assign) CGFloat maxX;
+@property (nonatomic, assign) CGFloat maxY;
+@end
+
+@implementation UIView (TL)
+- (void)setX:(CGFloat)x {
+    CGRect frame = self.frame;
+    frame.origin.x = x;
+    self.frame = frame;
+}
+
+- (void)setY:(CGFloat)y {
+    CGRect frame = self.frame;
+    frame.origin.y = y;
+    self.frame = frame;
+}
+
+- (void)setMaxX:(CGFloat)maxX {
+    CGRect frame = self.frame;
+    CGFloat currMaxX = CGRectGetMaxX(self.frame);
+    if (maxX > currMaxX) {
+        self.x += maxX - currMaxX;
+    } else {
+        self.x -= maxX - currMaxX;
+    }
+    self.frame = frame;
+}
+
+- (void)setMaxY:(CGFloat)maxY {
+    CGRect frame = self.frame;
+    CGFloat currMaxY = CGRectGetMaxY(self.frame);
+    if (maxY > currMaxY) {
+        self.y += maxY - currMaxY;
+    } else {
+        self.y -= maxY - currMaxY;
+    }
+    self.frame = frame;
+}
+
+- (CGFloat)maxX {
+    return CGRectGetMaxX(self.frame);
+}
+
+- (CGFloat)maxY {
+    return CGRectGetMaxY(self.frame);
+}
+
+- (CGFloat)x {
+    return self.frame.origin.x;
+}
+
+- (CGFloat)y {
+    return self.frame.origin.y;
+}
+
+- (void)setCenterX:(CGFloat)centerX {
+    CGPoint center = self.center;
+    center.x = centerX;
+    self.center = center;
+}
+
+- (CGFloat)centerX {
+    return self.center.x;
+}
+
+- (void)setCenterY:(CGFloat)centerY {
+    CGPoint center = self.center;
+    center.y = centerY;
+    self.center = center;
+}
+
+- (CGFloat)centerY {
+    return self.center.y;
+}
+
+- (void)setWidth:(CGFloat)width {
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    self.frame = frame;
+}
+
+- (void)setHeight:(CGFloat)height {
+    CGRect frame = self.frame;
+    frame.size.height = height;
+    self.frame = frame;
+}
+
+- (CGFloat)height {
+    return self.frame.size.height;
+}
+
+- (CGFloat)width {
+    return self.frame.size.width;
+}
+
+- (void)setSize:(CGSize)size {
+    CGRect frame = self.frame;
+    frame.size = size;
+    self.frame = frame;
+}
+
+- (CGSize)size {
+    return self.frame.size;
+}
+
+- (void)setOrigin:(CGPoint)origin {
+    CGRect frame = self.frame;
+    frame.origin = origin;
+    self.frame = frame;
+}
+
+- (CGPoint)origin {
+    return self.frame.origin;
+}
+@end
+
+
+@interface JLSegmentedButton : UIButton
+@end
+
+@implementation JLSegmentedButton
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event{
+    CGRect bounds = self.bounds;
+    CGFloat widthDelta = MAX(44.0 - bounds.size.width, 0);
+    CGFloat heightDelta = MAX(44.0 - bounds.size.height, 0);
+    bounds = CGRectInset(bounds, -0.5 * widthDelta, -0.5 * heightDelta);
+    return CGRectContainsPoint(bounds, point);
+}
+@end
+
+
 @interface TLSegmentedControl ()
 {
     NSUInteger lastIndex;
@@ -250,132 +391,5 @@
     
     JLSegmentedButton *firstBtn = [self.btns firstObject];
     self.indicatorBar.center = CGPointMake(CGRectGetMidX(firstBtn.frame), self.height - CGRectGetMidY(self.indicatorBar.frame) - self.padding.bottom);
-}
-@end
-
-
-
-@implementation JLSegmentedButton
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event{
-    CGRect bounds = self.bounds;
-    CGFloat widthDelta = MAX(44.0 - bounds.size.width, 0);
-    CGFloat heightDelta = MAX(44.0 - bounds.size.height, 0);
-    bounds = CGRectInset(bounds, -0.5 * widthDelta, -0.5 * heightDelta);
-    return CGRectContainsPoint(bounds, point);
-}
-@end
-
-
-
-
-@implementation UIView (TL)
-- (void)setX:(CGFloat)x {
-    CGRect frame = self.frame;
-    frame.origin.x = x;
-    self.frame = frame;
-}
-
-- (void)setY:(CGFloat)y {
-    CGRect frame = self.frame;
-    frame.origin.y = y;
-    self.frame = frame;
-}
-
-- (void)setMaxX:(CGFloat)maxX {
-    CGRect frame = self.frame;
-    CGFloat currMaxX = CGRectGetMaxX(self.frame);
-    if (maxX > currMaxX) {
-        self.x += maxX - currMaxX;
-    } else {
-        self.x -= maxX - currMaxX;
-    }
-    self.frame = frame;
-}
-
-- (void)setMaxY:(CGFloat)maxY {
-    CGRect frame = self.frame;
-    CGFloat currMaxY = CGRectGetMaxY(self.frame);
-    if (maxY > currMaxY) {
-        self.y += maxY - currMaxY;
-    } else {
-        self.y -= maxY - currMaxY;
-    }
-    self.frame = frame;
-}
-
-- (CGFloat)maxX {
-    return CGRectGetMaxX(self.frame);
-}
-
-- (CGFloat)maxY {
-    return CGRectGetMaxY(self.frame);
-}
-
-- (CGFloat)x {
-    return self.frame.origin.x;
-}
-
-- (CGFloat)y {
-    return self.frame.origin.y;
-}
-
-- (void)setCenterX:(CGFloat)centerX {
-    CGPoint center = self.center;
-    center.x = centerX;
-    self.center = center;
-}
-
-- (CGFloat)centerX {
-    return self.center.x;
-}
-
-- (void)setCenterY:(CGFloat)centerY {
-    CGPoint center = self.center;
-    center.y = centerY;
-    self.center = center;
-}
-
-- (CGFloat)centerY {
-    return self.center.y;
-}
-
-- (void)setWidth:(CGFloat)width {
-    CGRect frame = self.frame;
-    frame.size.width = width;
-    self.frame = frame;
-}
-
-- (void)setHeight:(CGFloat)height {
-    CGRect frame = self.frame;
-    frame.size.height = height;
-    self.frame = frame;
-}
-
-- (CGFloat)height {
-    return self.frame.size.height;
-}
-
-- (CGFloat)width {
-    return self.frame.size.width;
-}
-
-- (void)setSize:(CGSize)size {
-    CGRect frame = self.frame;
-    frame.size = size;
-    self.frame = frame;
-}
-
-- (CGSize)size {
-    return self.frame.size;
-}
-
-- (void)setOrigin:(CGPoint)origin {
-    CGRect frame = self.frame;
-    frame.origin = origin;
-    self.frame = frame;
-}
-
-- (CGPoint)origin {
-    return self.frame.origin;
 }
 @end
