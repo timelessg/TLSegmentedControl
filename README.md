@@ -2,7 +2,7 @@ TLSegmentedControl
 ==================
 
 # Introduce
-* 类似于微博的SegmentedControl。
+* 类似于微博的SegmentedControl
 
 # System Requirement
 * iOS 8.0 or later
@@ -21,13 +21,12 @@ TLSegmentedControl
     segmentBar.indicatorBarSize = CGSizeMake(15, 3);
     segmentBar.indicatorBarColor = @[(id)[UIColor orangeColor].CGColor,(id)[UIColor redColor].CGColor];
     self.navigationItem.titleView = segmentBar;
-
 ```
 
 # Installation with CocoaPods
 For TLSegmentedControl, use the following entry in your Podfile:
 ```
-* pod 'TLSegmentedControl'
+pod 'TLSegmentedControl'
 ```
 Then run ```pod install```
 
