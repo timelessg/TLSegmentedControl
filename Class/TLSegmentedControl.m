@@ -188,6 +188,7 @@
     if (lastIndex == index) {
         return;
     }
+    
     lastIndex = index;
     
     for (UIButton *segBtn in self.btns) {
@@ -214,11 +215,15 @@
     [self addSubview:self.scrollView];
     
     [self.scrollView addSubview:self.indicatorBar];
-    [self.indicatorBar sizeToFit];
     
     [self.scrollView.layer addSublayer:self.gradientLayer];
     self.gradientLayer.mask = self.indicatorBar.layer;
     
+    __weak typeof(self)weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.indicatorBar.width = strongSelf.indicatorBarSize.width;
+    }];
 }
 
 -(void)adjustContentOffsetWithCenterX:(CGFloat)centerX {
@@ -324,8 +329,8 @@
         self.indicatorBar.x = centerX - width / 2;
         self.indicatorBar.width = bOffsetX * 2 + width;
     }else {
-        self.indicatorBar.width = (gapWidth - bOffsetX) * 2 + width;
         self.indicatorBar.x = nextCenterX + width / 2 - self.indicatorBar.width;
+        self.indicatorBar.width = (gapWidth - bOffsetX) * 2 + width;
     }
 }
 -(void)setIndex:(NSUInteger)index {
