@@ -317,7 +317,6 @@
     }
     NSInteger index = offsetX / self.pageWidth;
     CGFloat rOffset = fmodf(offsetX, self.pageWidth);
-    CGFloat width = self.indicatorBarSize.width;
     
     CGFloat centerX = ((UIButton *)self.btns[index]).centerX;
     CGFloat nextCenterX = ((UIButton *)self.btns[index + 1 >= self.btns.count ? self.btns.count - 1 : index + 1]).centerX;
@@ -326,12 +325,13 @@
     CGFloat bOffsetX = (rOffset / self.pageWidth) * gapWidth;
     
     if (bOffsetX < gapWidth / 2) {
-        self.indicatorBar.x = centerX - width / 2;
-        self.indicatorBar.width = bOffsetX * 2 + width;
+        self.indicatorBar.x = centerX - 7.5;
+        self.indicatorBar.width = bOffsetX * 2 + 15;
     }else {
-        self.indicatorBar.x = nextCenterX + width / 2 - self.indicatorBar.width;
-        self.indicatorBar.width = (gapWidth - bOffsetX) * 2 + width;
+        self.indicatorBar.width = (gapWidth - bOffsetX) * 2 + 15;
+        self.indicatorBar.x = nextCenterX + 7.5 - self.indicatorBar.width;
     }
+
 }
 -(void)setIndex:(NSUInteger)index {
     _index = index;
