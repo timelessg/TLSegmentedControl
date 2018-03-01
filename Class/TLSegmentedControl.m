@@ -375,6 +375,8 @@
 #pragma mark - override
 
 -(void)layoutSubviews {
+    [super layoutSubviews];
+    
     self.scrollView.frame = self.bounds;
     
     CGFloat btnsWidth = 0;
@@ -390,11 +392,11 @@
     JLSegmentedButton *lastBtn = nil;
     for (int j = 0; j < self.btns.count; j ++ ) {
         JLSegmentedButton *segBtn = self.btns[j];
-        segBtn.center = CGPointMake(CGRectGetMidX(segBtn.frame) + (lastBtn ? CGRectGetMaxX(lastBtn.frame) + spacing : 0), segBtn.height / 2 + self.padding.top);
+        segBtn.center = CGPointMake(CGRectGetWidth(segBtn.frame) / 2 + (lastBtn ? CGRectGetMaxX(lastBtn.frame) + spacing : 0), segBtn.height / 2 + self.padding.top);
         lastBtn = segBtn;
     }
     
-    JLSegmentedButton *firstBtn = [self.btns firstObject];
-    self.indicatorBar.center = CGPointMake(CGRectGetMidX(firstBtn.frame), self.height - CGRectGetMidY(self.indicatorBar.frame) - self.padding.bottom);
+    JLSegmentedButton *selectBtn = self.btns[self.index];
+    self.indicatorBar.center = CGPointMake(CGRectGetMidX(selectBtn.frame), self.height - CGRectGetHeight(self.indicatorBar.frame) / 2 - self.padding.bottom);
 }
 @end
